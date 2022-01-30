@@ -78,7 +78,7 @@ class ArticleController extends AbstractController
     public function deleteAction(): void
     {
         if ($this->request->isPost()) {
-            $id = (int) $this->request->postParam('id');
+            $id = (int)$this->request->postParam('id');
             $this->database->deleteArticle($id);
             $this->redirect('/', ['before' => 'deleted']);
         }

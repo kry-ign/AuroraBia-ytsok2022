@@ -54,7 +54,7 @@
                         <td><?php echo htmlentities($note['status']) ?></td>
                         <td>
                             <a href="/?action=show&id=<?php echo (int)$note['id'] ?>">
-                                <button>Szczegóły</button>
+                                <button>Details</button>
                                 <a href="/?action=delete&id=<?php echo (int)$note['id'] ?>">
                                     <button>Delete</button>
                                 </a>
