@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Controller;
 
 require_once("AbstractController.php");
 
 use App\Exception\NotFoundException;
 
-class Controller extends AbstractController
+class  extends AbstractController
 {
     public function createAction()
     {
@@ -19,7 +19,12 @@ class Controller extends AbstractController
             ]);
             header('Location: /?before=created');
         }
-        $this->view->render('create',);
+        $this->view->render(
+            'create',
+            [
+                'title' => $this->request->postParam('title'),
+                'description' => $this->request->postParam('description'),
+            ]);
     }
 
     public function listAction()
