@@ -12,7 +12,7 @@ services:
             
     mysql:
         build: ./bin/mysql
-        container_name: 'png-mysql-test'
+        container_name: 'Aurora'
         # restart: 'always'
         ports:
             - "3306:3306"

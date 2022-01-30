@@ -7,12 +7,15 @@
       <li>
         <pre><?php echo htmlentities($note['description']) ?></pre>
       </li>
-      <li>Zapisano: <?php echo htmlentities($note['created']) ?></li>
+      <li>Zapisano: <?php echo htmlentities($note['status']) ?></li>
     </ul>
+  <a href="/?action=edit&id=<?php echo $note['id']?>">
+      <button>Edit</button>
+  </a>
   <?php else : ?>
-    <div>Brak notatki do wyświetlenia</div>
+    <div>Not found article</div>
   <?php endif; ?>
   <a href="/">
-    <button>Powrót do listy notatek</button>
+    <button>Return article list</button>
   </a>
 </div>

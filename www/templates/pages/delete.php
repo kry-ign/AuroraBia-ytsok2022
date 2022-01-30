@@ -14,9 +14,9 @@
         <input type="submit" value="Delete">
     </form>
     <?php else : ?>
-        <div>Brak notatki do wyświetlenia</div>
+        <div>Not found article</div>
     <?php endif; ?>
     <a href="/">
-        <button>Powrót do listy notatek</button>
+        <button>Return article list</button>
     </a>
 </div>

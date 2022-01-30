@@ -8,9 +8,9 @@ require_once("AbstractController.php");
 
 use App\Exception\NotFoundException;
 
-class  extends AbstractController
+class ArticleController extends AbstractController
 {
-    public function createAction()
+    public function createAction(): void
     {
         if ($this->request->hasPost()) {
             $this->database->createArticle([
@@ -20,14 +20,10 @@ class  extends AbstractController
             header('Location: /?before=created');
         }
         $this->view->render(
-            'create',
-            [
-                'title' => $this->request->postParam('title'),
-                'description' => $this->request->postParam('description'),
-            ]);
+            'create',);
     }
 
-    public function listAction()
+    public function listAction(): void
     {
         $this->view->render(
             'list',
@@ -36,27 +32,76 @@ class  extends AbstractController
                 'before' => $this->request->getParam('before'),
                 'error' => $this->request->getParam('error')
             ]
-            );
-    }
-
-    public function showAction()
-    {
-        $noteId = (int)$this->request->getParam('id');
-        if (!$noteId) {
-            header('Location /?error=missingArticleId');
-            exit;
-        }
-        try {
-            $note = $this->database->getArticle($noteId);
-        } catch (NotFoundException $e) {
-            header('Location /?error=articleNotFound');
-            exit;
-        } catch (Exception\StorageException $e) {
-        }
-        $this->view->render(
-            'show',
-            ['note' => $note]
         );
     }
 
+    public function showAction(): void
+    {
+        $this->view->render(
+            'show',
+            ['note' => $this->getArticles()]
+        );
+    }
+
+    public function editAction(): void
+    {
+        $note = $this->getArticles();
+        $this->view->render(
+            'edit',
+            ['note' => $this->getArticles()]
+        );
+
+    }
+
+    protected function redirect(string $to, array $params): void
+    {
+        $location = $to;
+
+        if (count($params)) {
+            $queryParams = [];
+            foreach ($params as $key => $value) {
+                $queryParams[] = urlencode($key) . '=' . urlencode($value);
+            }
+            $queryParams = implode('&', $queryParams);
+            $location .= '?' . $queryParams;
+        }
+
+        header("Location: $location");
+        exit;
+    }
+
+    private function action(): string
+    {
+        return $this->request->getParam('action', self::DEFAULT_ACTION);
+    }
+
+    public function deleteAction(): void
+    {
+        if ($this->request->isPost()) {
+            $id = (int) $this->request->postParam('id');
+            $this->database->deleteArticle($id);
+            $this->redirect('/', ['before' => 'deleted']);
+        }
+        $note = $this->getArticles();
+        $this->view->render(
+            'delete',
+            ['note' => $this->getArticles()]
+        );
+    }
+
+    final private function getArticles(): array
+    {
+        $noteID = (int)$this->request->getParam('id');
+        if (!$noteID) {
+            $this->redirect('/', ['error' => 'MissingArticleId']);
+            exit;
+        }
+        try {
+            $note = $this->database->getArticle($noteID);
+        } catch (NotFoundException $e) {
+            header('Location /?error=articleNotFound');
+            exit;
+        }
+        return $note;
+    }
 }
