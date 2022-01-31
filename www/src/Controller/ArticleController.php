@@ -13,7 +13,7 @@ class ArticleController extends AbstractController
     public function createAction(): void
     {
         if ($this->request->hasPost()) {
-            $this->database->createArticle([
+            $this->NoteModel->createArticle([
                 'title' => $this->request->postParam('title'),
                 'description' => $this->request->postParam('description'),
             ]);
@@ -28,7 +28,7 @@ class ArticleController extends AbstractController
         $this->view->render(
             'list',
             [
-                'notes' => $this->database->getArtilces(),
+                'notes' => $this->NoteModel->getArtilces(),
                 'before' => $this->request->getParam('before'),
                 'error' => $this->request->getParam('error')
             ]
@@ -79,7 +79,7 @@ class ArticleController extends AbstractController
     {
         if ($this->request->isPost()) {
             $id = (int)$this->request->postParam('id');
-            $this->database->deleteArticle($id);
+            $this->NoteModel->deleteArticle($id);
             $this->redirect('/', ['before' => 'deleted']);
         }
         $note = $this->getArticles();
@@ -97,7 +97,7 @@ class ArticleController extends AbstractController
             exit;
         }
         try {
-            $note = $this->database->getArticle($noteID);
+            $note = $this->NoteModel->getArticle($noteID);
         } catch (NotFoundException $e) {
             header('Location /?error=articleNotFound');
             exit;

@@ -15,7 +15,7 @@ abstract class AbstractController
 
     protected static array $configuration = [];
 
-    protected NoteModel $database;
+    protected NoteModel $NoteModel;
     protected Request $request;
     protected View $view;
 
@@ -33,7 +33,7 @@ abstract class AbstractController
         if (empty(self::$configuration['db'])) {
             throw new ConfigurationException('Configuration error');
         }
-        $this->database = new NoteModel(self::$configuration['db']);
+        $this->NoteModel = new NoteModel(self::$configuration['db']);
 
         $this->request = $request;
         $this->view = new View();
