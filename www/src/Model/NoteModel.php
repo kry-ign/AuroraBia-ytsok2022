@@ -13,7 +13,7 @@ use App\Exception\StorageException;
 use Throwable;
 use PDO;
 
-class Database extends AbstractModel
+class NoteModel extends AbstractModel
 {
 
 
