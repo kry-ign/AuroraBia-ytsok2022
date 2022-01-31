@@ -6,5 +6,5 @@ namespace App\Model;
 
 class UserModel extends AbstractModel
 {
-    //Feture
+    //Future
 }

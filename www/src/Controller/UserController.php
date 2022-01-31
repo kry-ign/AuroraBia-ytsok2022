@@ -6,5 +6,5 @@ namespace App\Controller;
 
 class UserController extends AbstractController
 {
-    //Feture
+    //Future
 }
