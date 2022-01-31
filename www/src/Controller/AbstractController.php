@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\View;
-use App\database;
+use App\Model\database;
 use App\Request;
 use App\Exception\ConfigurationException;
 
